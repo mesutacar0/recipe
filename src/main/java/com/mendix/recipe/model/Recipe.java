@@ -9,7 +9,6 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 public class Recipe {
 
     private RecipeHead head;
-    @XmlElement(name = "ingredients")
     private List<IngredientDivision> ingredients;
     @XmlElement(name = "ingredients")
     private Ingredient ingredient;
@@ -52,6 +51,9 @@ public class Recipe {
         this.ingredients = ingredients;
         this.ingredient = ingredient;
         this.directions = directions;
+    }
+
+    public Recipe() {
     }
 
 }

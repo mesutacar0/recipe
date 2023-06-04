@@ -46,4 +46,7 @@ public class RecipeHead {
         this.yield = yield;
     }
 
+    public RecipeHead() {
+    }
+
 }

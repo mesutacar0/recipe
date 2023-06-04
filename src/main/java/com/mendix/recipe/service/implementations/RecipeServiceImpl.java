@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import com.mendix.recipe.dto.CategoryDto;
@@ -51,6 +53,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    @EventListener(ApplicationReadyEvent.class)
     public void unmarshal() {
         JAXBContext context;
 

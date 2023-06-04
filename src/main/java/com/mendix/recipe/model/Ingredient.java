@@ -31,4 +31,7 @@ public class Ingredient {
         this.amount = amount;
     }
 
+    public Ingredient() {
+    }
+
 }

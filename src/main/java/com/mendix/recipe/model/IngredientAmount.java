@@ -31,4 +31,7 @@ public class IngredientAmount {
         this.unit = unit;
     }
 
+    public IngredientAmount() {
+    }
+
 }

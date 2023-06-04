@@ -21,4 +21,7 @@ public class Direction {
         this.step = step;
     }
 
+    public Direction() {
+    }
+
 }

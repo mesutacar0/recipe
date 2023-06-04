@@ -33,4 +33,7 @@ public class IngredientDivision {
         this.ingredientList = ingredientList;
     }
 
+    public IngredientDivision() {
+    }
+
 }

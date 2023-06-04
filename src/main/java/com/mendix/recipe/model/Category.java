@@ -47,4 +47,7 @@ public class Category {
         return true;
     }
 
+    public Category() {
+    }
+
 }
