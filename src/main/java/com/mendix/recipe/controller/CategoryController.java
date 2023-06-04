@@ -38,7 +38,7 @@ public class CategoryController {
         @GetMapping("/")
         public ResponseEntity<Set<CategoryDto>> get() {
                 Set<CategoryDto> categoryDtos = categoryService.findAll();
-                return new ResponseEntity<Set<CategoryDto>>(categoryDtos, HttpStatus.OK);
+                return new ResponseEntity<>(categoryDtos, HttpStatus.OK);
         }
 
         @Operation(summary = "New Category", description = "Put a new Category")

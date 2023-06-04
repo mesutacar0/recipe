@@ -2,60 +2,54 @@ package com.mendix.recipe.dto;
 
 import java.util.List;
 
-import com.mendix.recipe.model.Ingredient;
-import com.mendix.recipe.model.IngredientDivision;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Recipe Model Information")
 public class RecipeDto {
 
-    @Schema(description = "Recipe's title", example = "Recipe Title")
-    private String title;
-    @Schema(description = "Recipe's categories", example = "Microwave")
-    private List<CategoryDto> categories;
-    private List<IngredientDivision> ingredients;
-    private Ingredient ingredient;
-    private List<String> descriptionSteps;
+    private RecipeHeadDto head;
+    private List<IngredientDivisionDto> ingredients;
+    private IngredientDto ingredient;
+    private DirectionDto directions;
 
-    public String getTitle() {
-        return title;
+    public RecipeHeadDto getHead() {
+        return head;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setHead(RecipeHeadDto head) {
+        this.head = head;
     }
 
-    public List<CategoryDto> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<CategoryDto> categories) {
-        this.categories = categories;
-    }
-
-    public List<IngredientDivision> getIngredients() {
+    public List<IngredientDivisionDto> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<IngredientDivision> ingredients) {
+    public void setIngredients(List<IngredientDivisionDto> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public Ingredient getIngredient() {
+    public IngredientDto getIngredient() {
         return ingredient;
     }
 
-    public void setIngredient(Ingredient ingredient) {
+    public void setIngredient(IngredientDto ingredient) {
         this.ingredient = ingredient;
     }
 
-    public List<String> getDescriptionSteps() {
-        return descriptionSteps;
+    public DirectionDto getDirections() {
+        return directions;
     }
 
-    public void setDescriptionSteps(List<String> descriptionSteps) {
-        this.descriptionSteps = descriptionSteps;
+    public void setDirections(DirectionDto directions) {
+        this.directions = directions;
+    }
+
+    public RecipeDto(RecipeHeadDto head, List<IngredientDivisionDto> ingredients, IngredientDto ingredient,
+            DirectionDto directions) {
+        this.head = head;
+        this.ingredients = ingredients;
+        this.ingredient = ingredient;
+        this.directions = directions;
     }
 
 }

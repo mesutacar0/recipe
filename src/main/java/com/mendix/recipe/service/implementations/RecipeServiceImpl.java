@@ -28,7 +28,8 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<RecipeDto> findByCategory(CategoryDto category) {
-        return recipes.stream().map(recipeMapper::recipeToRecipeDto).filter(r -> r.getCategories().contains(category))
+        return recipes.stream().map(recipeMapper::recipeToRecipeDto)
+                .filter(r -> r.getHead().getCategories().contains(category))
                 .toList();
     }
 
