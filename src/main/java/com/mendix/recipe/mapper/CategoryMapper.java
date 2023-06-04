@@ -1,17 +1,13 @@
 package com.mendix.recipe.mapper;
 
-import org.aspectj.weaver.ast.CallExpr;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
 import com.mendix.recipe.dto.CategoryDto;
-import com.mendix.recipe.model.Category;
 
-@Mapper(componentModel = "spring")
-public interface CategoryMapper {
-    CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
+@Component
+public class CategoryMapper {
 
-    CategoryDto categoryToCategoryDto(String category);
-
-    String categoryDtoToCategory(CategoryDto categoryDto);
+    public CategoryDto stringToCategory(String category) {
+        return new CategoryDto(category);
+    }
 }
