@@ -1,5 +1,7 @@
 package com.mendix.recipe.service.implementations;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +14,9 @@ import com.mendix.recipe.dto.RecipeDto;
 import com.mendix.recipe.mapper.RecipeMapper;
 import com.mendix.recipe.model.Recipe;
 import com.mendix.recipe.service.interfaces.RecipeService;
+
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -43,6 +48,22 @@ public class RecipeServiceImpl implements RecipeService {
     public List<RecipeDto> searchByKeyword(String keyword) {
         return recipes.stream().filter(r -> r.toString().contains(keyword)).map(recipeMapper::recipeToRecipeDto)
                 .toList();
+    }
+
+    @Override
+    public void unmarshal() {
+        JAXBContext context;
+
+        try {
+            context = JAXBContext.newInstance(Recipe.class);
+            Recipe rc = (Recipe) context.createUnmarshaller()
+                    .unmarshal(new FileReader("./book.xml"));
+
+            recipes.add(rc);
+        } catch (FileNotFoundException | JAXBException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 }

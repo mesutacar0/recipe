@@ -2,7 +2,13 @@ package com.mendix.recipe.model;
 
 import java.util.List;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "ing-div")
 public class IngredientDivision {
+
+    @XmlElement(name = "title")
     private String title;
     private List<Ingredient> ingredientList;
 

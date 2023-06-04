@@ -1,6 +1,12 @@
 package com.mendix.recipe.model;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "ing")
 public class Ingredient {
+
+    @XmlElement(name = "item")
     private String item;
     private IngredientAmount amount;
 

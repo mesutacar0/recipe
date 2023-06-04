@@ -1,6 +1,12 @@
 package com.mendix.recipe.model;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "directions")
 public class Direction {
+
+    @XmlElement(name = "step")
     private String step;
 
     public Direction(String step) {

@@ -14,4 +14,6 @@ public interface RecipeService {
     List<RecipeDto> searchByKeyword(String keyword);
 
     RecipeDto save(RecipeDto recipe);
+
+    void unmarshal();
 }

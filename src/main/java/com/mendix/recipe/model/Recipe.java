@@ -2,9 +2,16 @@ package com.mendix.recipe.model;
 
 import java.util.List;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "recipe")
 public class Recipe {
+
     private RecipeHead head;
+    @XmlElement(name = "ingredients")
     private List<IngredientDivision> ingredients;
+    @XmlElement(name = "ingredients")
     private Ingredient ingredient;
     private Direction directions;
 

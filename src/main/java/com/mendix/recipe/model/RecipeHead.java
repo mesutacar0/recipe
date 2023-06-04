@@ -2,9 +2,18 @@ package com.mendix.recipe.model;
 
 import java.util.List;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "head")
 public class RecipeHead {
+    @XmlElement(name = "title")
     private String title;
+    @XmlElementWrapper(name = "categories")
+    @XmlElement(name = "cat")
     private List<Category> categories;
+    @XmlElement(name = "yield")
     private int yield;
 
     public String getTitle() {

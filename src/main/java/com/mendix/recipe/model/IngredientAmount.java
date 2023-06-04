@@ -1,7 +1,13 @@
 package com.mendix.recipe.model;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "amt")
 public class IngredientAmount {
+    @XmlElement(name = "qty")
     private String quantity;
+    @XmlElement(name = "unit")
     private String unit;
 
     public String getQuantity() {
