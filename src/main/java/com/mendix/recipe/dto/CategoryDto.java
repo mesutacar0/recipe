@@ -47,4 +47,11 @@ public class CategoryDto {
     public CategoryDto(String name) {
         this.name = name;
     }
+
+    /**
+     * 
+     */
+    public CategoryDto() {
+    }
+
 }
