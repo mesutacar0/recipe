@@ -3,26 +3,17 @@ package com.mendix.recipe.model;
 import java.util.List;
 
 public class Recipe {
-    private String title;
-    private List<Category> categories;
+    private RecipeHead head;
     private List<IngredientDivision> ingredients;
     private Ingredient ingredient;
-    private List<String> descriptionSteps;
+    private Direction directions;
 
-    public String getTitle() {
-        return title;
+    public RecipeHead getHead() {
+        return head;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public List<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    public void setHead(RecipeHead head) {
+        this.head = head;
     }
 
     public List<IngredientDivision> getIngredients() {
@@ -41,12 +32,19 @@ public class Recipe {
         this.ingredient = ingredient;
     }
 
-    public List<String> getDescriptionSteps() {
-        return descriptionSteps;
+    public Direction getDirections() {
+        return directions;
     }
 
-    public void setDescriptionSteps(List<String> descriptionSteps) {
-        this.descriptionSteps = descriptionSteps;
+    public void setDirections(Direction directions) {
+        this.directions = directions;
+    }
+
+    public Recipe(RecipeHead head, List<IngredientDivision> ingredients, Ingredient ingredient, Direction directions) {
+        this.head = head;
+        this.ingredients = ingredients;
+        this.ingredient = ingredient;
+        this.directions = directions;
     }
 
 }

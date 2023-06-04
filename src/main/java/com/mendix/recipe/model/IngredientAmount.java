@@ -1,47 +1,26 @@
 package com.mendix.recipe.model;
 
-import com.mendix.recipe.util.AmountUnit;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-
 public class IngredientAmount {
-    private int quantity;
-    @Enumerated(EnumType.STRING)
-    private AmountUnit unit;
+    private String quantity;
+    private String unit;
 
-    /**
-     * @return the quantity
-     */
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    /**
-     * @param quantity the quantity to set
-     */
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
-    /**
-     * @return the unit
-     */
-    public AmountUnit getUnit() {
+    public String getUnit() {
         return unit;
     }
 
-    /**
-     * @param unit the unit to set
-     */
-    public void setUnit(AmountUnit unit) {
+    public void setUnit(String unit) {
         this.unit = unit;
     }
 
-    /**
-     * @param quantity
-     * @param unit
-     */
-    public IngredientAmount(int quantity, AmountUnit unit) {
+    public IngredientAmount(String quantity, String unit) {
         this.quantity = quantity;
         this.unit = unit;
     }
