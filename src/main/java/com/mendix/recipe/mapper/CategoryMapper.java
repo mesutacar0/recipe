@@ -1,5 +1,6 @@
 package com.mendix.recipe.mapper;
 
+import org.aspectj.weaver.ast.CallExpr;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -10,7 +11,7 @@ import com.mendix.recipe.model.Category;
 public interface CategoryMapper {
     CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
 
-    CategoryDto categoryToCategoryDto(Category category);
+    CategoryDto categoryToCategoryDto(String category);
 
-    Category categoryDtoToCategory(CategoryDto categoryDto);
+    String categoryDtoToCategory(CategoryDto categoryDto);
 }

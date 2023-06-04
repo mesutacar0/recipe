@@ -15,5 +15,5 @@ public interface RecipeService {
 
     RecipeDto save(RecipeDto recipe);
 
-    void unmarshal();
+    void init();
 }

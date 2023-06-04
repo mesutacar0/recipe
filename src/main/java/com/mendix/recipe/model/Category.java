@@ -1,6 +1,15 @@
 package com.mendix.recipe.model;
 
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAccessType;
+
+@XmlRootElement(name = "cat")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Category {
+
+    @XmlElement(name = "cat")
     private String name;
 
     public String getName() {

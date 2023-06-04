@@ -16,9 +16,7 @@ import com.mendix.recipe.dto.RecipeDto;
 import com.mendix.recipe.mapper.RecipeMapper;
 import com.mendix.recipe.model.Recipe;
 import com.mendix.recipe.service.interfaces.RecipeService;
-
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBException;
+import com.mendix.recipe.util.XMLOperations;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -54,19 +52,8 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     @EventListener(ApplicationReadyEvent.class)
-    public void unmarshal() {
-        JAXBContext context;
-
-        try {
-            context = JAXBContext.newInstance(Recipe.class);
-            Recipe rc = (Recipe) context.createUnmarshaller()
-                    .unmarshal(new FileReader("./book.xml"));
-
-            recipes.add(rc);
-        } catch (FileNotFoundException | JAXBException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public void init() {
+        XMLOperations.loadInitialFiles().forEach(recipeXml -> recipes.add(recipeXml.getRecipe()));
     }
 
 }
