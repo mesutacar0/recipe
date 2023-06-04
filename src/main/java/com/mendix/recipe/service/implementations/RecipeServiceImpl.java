@@ -1,10 +1,14 @@
 package com.mendix.recipe.service.implementations;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import com.mendix.recipe.dto.CategoryDto;
@@ -12,6 +16,7 @@ import com.mendix.recipe.dto.RecipeDto;
 import com.mendix.recipe.mapper.RecipeMapper;
 import com.mendix.recipe.model.Recipe;
 import com.mendix.recipe.service.interfaces.RecipeService;
+import com.mendix.recipe.util.XMLOperations;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -43,6 +48,12 @@ public class RecipeServiceImpl implements RecipeService {
     public List<RecipeDto> searchByKeyword(String keyword) {
         return recipes.stream().filter(r -> r.toString().contains(keyword)).map(recipeMapper::recipeToRecipeDto)
                 .toList();
+    }
+
+    @Override
+    @EventListener(ApplicationReadyEvent.class)
+    public void init() {
+        XMLOperations.loadInitialFiles().forEach(recipeXml -> recipes.add(recipeXml.getRecipe()));
     }
 
 }

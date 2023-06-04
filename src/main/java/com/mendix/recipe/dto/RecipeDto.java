@@ -8,48 +8,70 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class RecipeDto {
 
     private RecipeHeadDto head;
-    private List<IngredientDivisionDto> ingredients;
-    private IngredientDto ingredient;
+    private List<IngredientDivisionDto> ingredientDivs;
+    private List<IngredientDto> ingredients;
     private DirectionDto directions;
 
+    /**
+     * @return the head
+     */
     public RecipeHeadDto getHead() {
         return head;
     }
 
+    /**
+     * @param head the head to set
+     */
     public void setHead(RecipeHeadDto head) {
         this.head = head;
     }
 
-    public List<IngredientDivisionDto> getIngredients() {
+    /**
+     * @return the ingredientDivs
+     */
+    public List<IngredientDivisionDto> getIngredientDivs() {
+        return ingredientDivs;
+    }
+
+    /**
+     * @param ingredientDivs the ingredientDivs to set
+     */
+    public void setIngredientDivs(List<IngredientDivisionDto> ingredientDivs) {
+        this.ingredientDivs = ingredientDivs;
+    }
+
+    /**
+     * @return the ingredients
+     */
+    public List<IngredientDto> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<IngredientDivisionDto> ingredients) {
+    /**
+     * @param ingredients the ingredients to set
+     */
+    public void setIngredients(List<IngredientDto> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public IngredientDto getIngredient() {
-        return ingredient;
-    }
-
-    public void setIngredient(IngredientDto ingredient) {
-        this.ingredient = ingredient;
-    }
-
+    /**
+     * @return the directions
+     */
     public DirectionDto getDirections() {
         return directions;
     }
 
+    /**
+     * @param directions the directions to set
+     */
     public void setDirections(DirectionDto directions) {
         this.directions = directions;
     }
 
-    public RecipeDto(RecipeHeadDto head, List<IngredientDivisionDto> ingredients, IngredientDto ingredient,
-            DirectionDto directions) {
-        this.head = head;
-        this.ingredients = ingredients;
-        this.ingredient = ingredient;
-        this.directions = directions;
+    /**
+     * 
+     */
+    public RecipeDto() {
     }
 
 }

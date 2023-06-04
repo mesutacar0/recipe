@@ -15,7 +15,7 @@ import com.mendix.recipe.service.interfaces.CategoryService;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    static Set<Category> categories = new HashSet<>();
+    static Set<String> categories = new HashSet<>();
 
     @Autowired
     CategoryMapper categoryMapper;

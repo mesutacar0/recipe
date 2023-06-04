@@ -41,4 +41,10 @@ public class CategoryDto {
         return hash;
     }
 
+    /**
+     * @param name
+     */
+    public CategoryDto(String name) {
+        this.name = name;
+    }
 }
