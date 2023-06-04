@@ -1,8 +1,6 @@
 package com.mendix.recipe.model;
 
-import java.io.Serializable;
-
-public class RecipeCategory implements Serializable {
+public class Category {
     private int id;
     private String name;
 
@@ -38,7 +36,7 @@ public class RecipeCategory implements Serializable {
      * @param id
      * @param name
      */
-    public RecipeCategory(int id, String name) {
+    public Category(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -63,7 +61,8 @@ public class RecipeCategory implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        RecipeCategory other = (RecipeCategory) obj;
+
+        Category other = (Category) obj;
         if (id != other.id) {
             return false;
         }
@@ -79,7 +78,7 @@ public class RecipeCategory implements Serializable {
 
     @Override
     public String toString() {
-        return "RecipeCategory [id=" + id + ", name=" + name + "]";
+        return "Category [id=" + id + ", name=" + name + "]";
     }
 
 }
