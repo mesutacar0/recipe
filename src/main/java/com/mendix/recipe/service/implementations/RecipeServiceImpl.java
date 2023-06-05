@@ -61,9 +61,10 @@ public class RecipeServiceImpl implements RecipeService {
             recipeCategoryRepository.save(c.getName().toLowerCase(), recipe.getHead().getTitle().toLowerCase());
             recipeKeywordRepository.save(c.getName().toLowerCase(), recipe.getHead().getTitle().toLowerCase());
         });
-        recipe.getIngredients().getIngredients().stream().forEach(c -> {
-            recipeKeywordRepository.save(c.getItem().toLowerCase(), recipe.getHead().getTitle().toLowerCase());
-        });
+        // recipe.getIngredients().getIngredients().stream().forEach(c -> {
+        // recipeKeywordRepository.save(c.getItem().toLowerCase(),
+        // recipe.getHead().getTitle().toLowerCase());
+        // });
         return recipeMapper.recipeToRecipeDto(recipeRepository.save(recipeMapper.recipeDtoToRecipe(recipe)));
     }
 
