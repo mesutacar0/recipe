@@ -1,6 +1,5 @@
 package com.mendix.recipe.repository.implementations;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +21,7 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 
     @Override
     public Recipe save(Recipe recipe) {
-        recipe.getHead().getCategories().forEach(categoryRepository::save);
-        this.recipes.put(recipe.getHead().getTitle().toLowerCase(), recipe);
+        recipes.put(recipe.getHead().getTitle().toLowerCase(), recipe);
         return recipe;
     }
 
@@ -39,7 +37,17 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 
     @Override
     public List<Recipe> searchByKeyword(String keyword) {
-        return this.recipes.values().stream().filter(r -> r.getHead().getCategories().contains(keyword)
+        return recipes.values().stream().filter(r -> r.getHead().getCategories().contains(keyword)
                 || r.getHead().getTitle().toLowerCase().contains(keyword.toLowerCase())).toList();
+    }
+
+    @Override
+    public Boolean existsById(String id) {
+        return recipes.containsKey(id);
+    }
+
+    @Override
+    public Recipe findById(String id) {
+        return recipes.get(id);
     }
 }

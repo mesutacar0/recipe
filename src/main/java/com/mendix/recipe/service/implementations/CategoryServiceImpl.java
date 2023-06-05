@@ -1,7 +1,6 @@
 package com.mendix.recipe.service.implementations;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.List;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +10,6 @@ import com.mendix.recipe.dto.CategoryDto;
 import com.mendix.recipe.mapper.CategoryMapper;
 import com.mendix.recipe.repository.interfaces.CategoryRepository;
 import com.mendix.recipe.service.interfaces.CategoryService;
-
-import jakarta.persistence.EntityExistsException;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -24,25 +21,19 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryRepository categoryRepository;
 
     @Override
-    public Set<CategoryDto> findAll() {
+    public List<CategoryDto> findAll() {
         return StreamSupport.stream(categoryRepository.findAll().spliterator(), false)
-                .map(categoryMapper::stringToCategory)
-                .collect(Collectors.toSet());
+                .map(categoryMapper::stringToCategory).toList();
     }
 
     @Override
-    public CategoryDto save(CategoryDto categoryDto) {
-        if (isExists(categoryDto))
-            throw new EntityExistsException();
-
-        categoryRepository.save(categoryDto.getName());
-        return categoryDto;
+    public void save(CategoryDto categoryDto) {
+        if (!isExists(categoryDto))
+            categoryMapper.stringToCategory(categoryRepository.save(categoryDto.getName()));
     }
 
     private Boolean isExists(CategoryDto categoryDto) {
-        return StreamSupport.stream(categoryRepository.findAll().spliterator(), false)
-                .map(categoryMapper::stringToCategory)
-                .anyMatch(c -> c.equals(categoryDto));
+        return categoryRepository.existsById(categoryDto.getName().toLowerCase());
     }
 
 }
