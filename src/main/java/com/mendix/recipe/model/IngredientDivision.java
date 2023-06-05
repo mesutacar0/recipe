@@ -4,17 +4,14 @@ import java.util.List;
 
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
 
-@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "ing-div")
 public class IngredientDivision {
 
-    @XmlElement(name = "title")
     private String title;
-    private List<Ingredient> ingredientList;
+    private List<Ingredient> ingredients;
 
+    @XmlElement(name = "title")
     public String getTitle() {
         return title;
     }
@@ -23,19 +20,20 @@ public class IngredientDivision {
         this.title = title;
     }
 
-    public List<Ingredient> getIngredientList() {
-        return ingredientList;
-    }
-
-    public void setIngredientList(List<Ingredient> ingredientList) {
-        this.ingredientList = ingredientList;
-    }
-
     public IngredientDivision(String title, List<Ingredient> ingredientList) {
         this.title = title;
-        this.ingredientList = ingredientList;
+        this.ingredients = ingredientList;
     }
 
     public IngredientDivision() {
+    }
+
+    @XmlElement(name = "ing")
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }
