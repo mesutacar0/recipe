@@ -1,6 +1,7 @@
 package com.mendix.recipe.mapper;
 
 import java.util.List;
+import java.util.function.Function;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -28,7 +29,11 @@ public interface RecipeMapper {
 
     @Named("stringToCategory")
     public static List<CategoryDto> stringToCategory(List<String> categories) {
-        return categories.stream().map(CategoryDto::new).toList();
+        return convert(categories, CategoryDto::new);// categories.stream().map(CategoryDto::new).toList();
+    }
+
+    private static <S, T> List<S> convert(List<T> from, Function<T, S> mapper) {
+        return from.stream().map(mapper).toList();
     }
 
 }
