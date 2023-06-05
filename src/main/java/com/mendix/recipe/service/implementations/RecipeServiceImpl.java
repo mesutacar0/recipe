@@ -16,6 +16,8 @@ import com.mendix.recipe.repository.interfaces.RecipeRepository;
 import com.mendix.recipe.service.interfaces.RecipeService;
 import com.mendix.recipe.util.XMLOperations;
 
+import jakarta.persistence.EntityExistsException;
+
 @Service
 public class RecipeServiceImpl implements RecipeService {
 
@@ -39,6 +41,8 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public RecipeDto save(RecipeDto recipe) {
+        if (isExists(recipe))
+            throw new EntityExistsException();
         recipeRepository.save(recipeMapper.recipeDtoToRecipe(recipe));
         return recipe;
     }
@@ -55,6 +59,13 @@ public class RecipeServiceImpl implements RecipeService {
     @EventListener(ApplicationReadyEvent.class)
     public void init() {
         XMLOperations.loadInitialFiles().forEach(recipeXml -> recipeRepository.save(recipeXml.getRecipe()));
+    }
+
+    private Boolean isExists(RecipeDto recipe) {
+        return StreamSupport.stream(recipeRepository.findAll().spliterator(), false)
+                .map(recipeMapper::recipeToRecipeDto)
+                .anyMatch(c -> c.equals(recipe));
+
     }
 
 }

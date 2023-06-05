@@ -46,4 +46,36 @@ public class RecipeDto {
 
     public RecipeDto() {
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((head.getTitle() == null) ? 0 : head.getTitle().hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        RecipeDto other = (RecipeDto) obj;
+
+        if (head.getTitle() == null) {
+            if (other.head.getTitle() != null) {
+                return false;
+            }
+        } else if (!head.getTitle().equals(other.head.getTitle())) {
+            return false;
+        }
+        return true;
+    }
 }

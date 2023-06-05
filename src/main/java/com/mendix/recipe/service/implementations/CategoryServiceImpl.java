@@ -39,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryDto;
     }
 
-    public Boolean isExists(CategoryDto categoryDto) {
+    private Boolean isExists(CategoryDto categoryDto) {
         return StreamSupport.stream(categoryRepository.findAll().spliterator(), false)
                 .map(categoryMapper::stringToCategory)
                 .anyMatch(c -> c.equals(categoryDto));
