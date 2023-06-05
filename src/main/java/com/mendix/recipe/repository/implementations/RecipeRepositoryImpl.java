@@ -1,7 +1,9 @@
 package com.mendix.recipe.repository.implementations;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,28 +18,28 @@ public class RecipeRepositoryImpl implements RecipeRepository {
     @Autowired
     CategoryRepository categoryRepository;
 
-    private List<Recipe> recipes = new ArrayList<>();
+    private Map<String, Recipe> recipes = new HashMap<>();
 
     @Override
     public Recipe save(Recipe recipe) {
         recipe.getHead().getCategories().forEach(categoryRepository::save);
-        this.recipes.add(recipe);
+        this.recipes.put(recipe.getHead().getTitle().toLowerCase(), recipe);
         return recipe;
     }
 
     @Override
     public List<Recipe> findAll() {
-        return recipes;
+        return recipes.values().stream().toList();
     }
 
     @Override
     public List<Recipe> findByCategory(String category) {
-        return this.recipes.stream().filter(r -> r.getHead().getCategories().contains(category)).toList();
+        return recipes.values().stream().filter(r -> r.getHead().getCategories().contains(category)).toList();
     }
 
     @Override
     public List<Recipe> searchByKeyword(String keyword) {
-        return this.recipes.stream().filter(r -> r.getHead().getCategories().contains(keyword)
+        return this.recipes.values().stream().filter(r -> r.getHead().getCategories().contains(keyword)
                 || r.getHead().getTitle().toLowerCase().contains(keyword.toLowerCase())).toList();
     }
 }
