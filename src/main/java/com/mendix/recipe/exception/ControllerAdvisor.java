@@ -38,7 +38,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
-        body.put("message", "Already exists");
+        body.put("message", "Object Already Exists and Cannot be Duplicated");
 
         logger.info("exception: " + ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
@@ -50,7 +50,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
-        body.put("message", "Internal Error");
+        body.put("message", "Internal Server Error, Please Contact Developer");
 
         logger.info("exception: " + ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);

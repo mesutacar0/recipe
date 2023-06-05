@@ -38,5 +38,4 @@ public class IngredientDivision {
 
     public IngredientDivision() {
     }
-
 }

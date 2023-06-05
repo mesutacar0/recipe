@@ -22,5 +22,4 @@ public class DirectionDto {
 
     public DirectionDto() {
     }
-
 }

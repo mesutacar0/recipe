@@ -30,5 +30,4 @@ public class IngredientDivisionDto {
         this.title = title;
         this.ingredients = ingredients;
     }
-
 }

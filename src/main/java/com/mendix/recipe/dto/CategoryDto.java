@@ -1,11 +1,18 @@
 package com.mendix.recipe.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 @Schema(description = "Category Model Information")
 public class CategoryDto {
 
     @Schema(description = "Category's name", example = "Microwave")
+    @NotBlank
+    @NotEmpty
+    @JsonProperty(required = true)
     private String name;
 
     public String getName() {
@@ -16,42 +23,10 @@ public class CategoryDto {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-
-        if (obj.getClass() != this.getClass()) {
-            return false;
-        }
-
-        final CategoryDto other = (CategoryDto) obj;
-        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + (this.name != null ? this.name.hashCode() : 0);
-        return hash;
-    }
-
-    /**
-     * @param name
-     */
     public CategoryDto(String name) {
         this.name = name;
     }
 
-    /**
-     * 
-     */
     public CategoryDto() {
     }
-
 }

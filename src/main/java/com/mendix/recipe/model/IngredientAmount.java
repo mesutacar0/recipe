@@ -36,5 +36,4 @@ public class IngredientAmount {
 
     public IngredientAmount() {
     }
-
 }

@@ -1,15 +1,15 @@
 package com.mendix.recipe.service.implementations;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mendix.recipe.dto.CategoryDto;
 import com.mendix.recipe.mapper.CategoryMapper;
-import com.mendix.recipe.repository.CategoryRepository;
+import com.mendix.recipe.repository.interfaces.CategoryRepository;
 import com.mendix.recipe.service.interfaces.CategoryService;
 
 import jakarta.persistence.EntityExistsException;
@@ -25,8 +25,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Set<CategoryDto> findAll() {
-        List<String> res = categoryRepository.findAll();
-        return res.stream().map(categoryMapper::stringToCategory)
+        return StreamSupport.stream(categoryRepository.findAll().spliterator(), false)
+                .map(categoryMapper::stringToCategory)
                 .collect(Collectors.toSet());
     }
 
@@ -40,7 +40,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     public Boolean isExists(CategoryDto categoryDto) {
-        return categoryRepository.findAll().stream().map(categoryMapper::stringToCategory)
+        return StreamSupport.stream(categoryRepository.findAll().spliterator(), false)
+                .map(categoryMapper::stringToCategory)
                 .anyMatch(c -> c.equals(categoryDto));
     }
 
