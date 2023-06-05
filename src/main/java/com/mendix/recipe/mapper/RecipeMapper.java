@@ -24,12 +24,12 @@ public interface RecipeMapper {
 
     @Named("categoryToString")
     public static List<String> categoryToString(List<CategoryDto> categoryDtos) {
-        return categoryDtos.stream().map(CategoryDto::getName).toList();
+        return convert(categoryDtos, CategoryDto::getName);
     }
 
     @Named("stringToCategory")
     public static List<CategoryDto> stringToCategory(List<String> categories) {
-        return convert(categories, CategoryDto::new);// categories.stream().map(CategoryDto::new).toList();
+        return convert(categories, CategoryDto::new);
     }
 
     private static <S, T> List<S> convert(List<T> from, Function<T, S> mapper) {
