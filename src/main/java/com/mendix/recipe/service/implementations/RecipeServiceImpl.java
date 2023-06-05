@@ -2,6 +2,7 @@ package com.mendix.recipe.service.implementations;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.mendix.recipe.dto.CategoryDto;
 import com.mendix.recipe.dto.RecipeDto;
 import com.mendix.recipe.mapper.RecipeMapper;
-import com.mendix.recipe.repository.RecipeRepository;
+import com.mendix.recipe.repository.interfaces.RecipeRepository;
 import com.mendix.recipe.service.interfaces.RecipeService;
 import com.mendix.recipe.util.XMLOperations;
 
@@ -26,7 +27,8 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<RecipeDto> findAll() {
-        return recipeRepository.findAll().stream().map(recipeMapper::recipeToRecipeDto).collect(Collectors.toList());
+        return StreamSupport.stream(recipeRepository.findAll().spliterator(), false)
+                .map(recipeMapper::recipeToRecipeDto).collect(Collectors.toList());
     }
 
     @Override
@@ -43,7 +45,8 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<RecipeDto> searchByKeyword(String keyword) {
-        return recipeRepository.findAll().stream().filter(r -> r.toString().contains(keyword))
+        return StreamSupport.stream(recipeRepository.findAll().spliterator(), false)
+                .filter(r -> r.toString().contains(keyword))
                 .map(recipeMapper::recipeToRecipeDto)
                 .toList();
     }

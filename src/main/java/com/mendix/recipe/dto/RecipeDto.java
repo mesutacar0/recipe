@@ -12,66 +12,38 @@ public class RecipeDto {
     private List<IngredientDto> ingredients;
     private DirectionDto directions;
 
-    /**
-     * @return the head
-     */
     public RecipeHeadDto getHead() {
         return head;
     }
 
-    /**
-     * @param head the head to set
-     */
     public void setHead(RecipeHeadDto head) {
         this.head = head;
     }
 
-    /**
-     * @return the ingredientDivs
-     */
     public List<IngredientDivisionDto> getIngredientDivs() {
         return ingredientDivs;
     }
 
-    /**
-     * @param ingredientDivs the ingredientDivs to set
-     */
     public void setIngredientDivs(List<IngredientDivisionDto> ingredientDivs) {
         this.ingredientDivs = ingredientDivs;
     }
 
-    /**
-     * @return the ingredients
-     */
     public List<IngredientDto> getIngredients() {
         return ingredients;
     }
 
-    /**
-     * @param ingredients the ingredients to set
-     */
     public void setIngredients(List<IngredientDto> ingredients) {
         this.ingredients = ingredients;
     }
 
-    /**
-     * @return the directions
-     */
     public DirectionDto getDirections() {
         return directions;
     }
 
-    /**
-     * @param directions the directions to set
-     */
     public void setDirections(DirectionDto directions) {
         this.directions = directions;
     }
 
-    /**
-     * 
-     */
     public RecipeDto() {
     }
-
 }
