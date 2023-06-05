@@ -1,19 +1,15 @@
 package com.mendix.recipe.model;
 
-import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlAccessType;
 
 @XmlRootElement(name = "ing")
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Ingredient {
 
-    @XmlElement(name = "item")
     private String item;
-    @XmlElement(name = "amt")
     private IngredientAmount amount;
 
+    @XmlElement(name = "item")
     public String getItem() {
         return item;
     }
@@ -22,6 +18,7 @@ public class Ingredient {
         this.item = item;
     }
 
+    @XmlElement(name = "amt")
     public IngredientAmount getAmount() {
         return amount;
     }
