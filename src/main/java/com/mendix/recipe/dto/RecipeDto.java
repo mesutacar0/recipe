@@ -1,5 +1,7 @@
 package com.mendix.recipe.dto;
 
+import java.util.Objects;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Recipe Model Information")
@@ -30,10 +32,8 @@ public class RecipeDto {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((head.getTitle() == null) ? 0 : head.getTitle().hashCode());
-        return result;
+
+        return Objects.hash(head.getTitle());
     }
 
     @Override
@@ -50,14 +50,7 @@ public class RecipeDto {
 
         RecipeDto other = (RecipeDto) obj;
 
-        if (head.getTitle() == null) {
-            if (other.head.getTitle() != null) {
-                return false;
-            }
-        } else if (!head.getTitle().equals(other.head.getTitle())) {
-            return false;
-        }
-        return true;
+        return Objects.equals(head.getTitle(), other.getHead().getTitle());
     }
 
     public IngredientWrapperDto getIngredients() {
