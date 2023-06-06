@@ -1,14 +1,19 @@
 package com.mendix.recipe.dto;
 
+import java.util.Collection;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 
 @Schema(description = "Recipe Model Information")
 public class RecipeDto {
-
+    @NotNull
     private RecipeHeadDto head;
+    @NotNull
     private IngredientWrapperDto ingredients;
+    @NotNull
     private DirectionDto directions;
 
     public RecipeHeadDto getHead() {
@@ -32,7 +37,6 @@ public class RecipeDto {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(head.getTitle());
     }
 
@@ -62,16 +66,13 @@ public class RecipeDto {
     }
 
     public String getKeywords() {
-        StringBuffer keywords = new StringBuffer();
-        keywords.append(head.getTitle());
-        head.getCategories().forEach(c -> keywords.append(c.getName()));
-
-        if (ingredients.getIngredients() != null && !ingredients.getIngredients().isEmpty())
-            ingredients.getIngredients().forEach(i -> keywords.append(i.getItem()));
-
-        if (ingredients.getIngredientDivs() != null && !ingredients.getIngredientDivs().isEmpty())
-            ingredients.getIngredientDivs()
-                    .forEach(div -> div.getIngredients().forEach(i -> keywords.append(i.getItem())));
+        StringBuilder keywords = new StringBuilder();
+        keywords.append(head.getTitle()).append(" ");
+        head.getCategories().forEach(c -> keywords.append(c.getName()).append(" "));
+        keywords.append(
+                ingredients.getIngredients().stream().map(IngredientDto::getItem).collect(Collectors.joining(" ")));
+        keywords.append(ingredients.getIngredientDivs().stream().map(IngredientDivisionDto::getIngredients)
+                .flatMap(Collection::stream).map(IngredientDto::getItem).collect(Collectors.joining(" ")));
 
         return keywords.toString().toLowerCase();
     }

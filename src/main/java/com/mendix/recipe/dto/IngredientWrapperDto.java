@@ -16,7 +16,8 @@ public class IngredientWrapperDto {
     }
 
     public void setIngredientDivs(List<IngredientDivisionDto> ingredientDivs) {
-        this.ingredientDivs = ingredientDivs;
+        if (ingredientDivs != null)
+            this.ingredientDivs = ingredientDivs;
     }
 
     public List<IngredientDto> getIngredients() {
@@ -24,7 +25,8 @@ public class IngredientWrapperDto {
     }
 
     public void setIngredients(List<IngredientDto> ingredients) {
-        this.ingredients = ingredients;
+        if (ingredients != null)
+            this.ingredients = ingredients;
     }
 
 }
