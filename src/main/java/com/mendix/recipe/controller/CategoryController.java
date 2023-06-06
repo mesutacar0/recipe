@@ -1,6 +1,6 @@
 package com.mendix.recipe.controller;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,8 +37,8 @@ public class CategoryController {
                         @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
                         @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
         @GetMapping()
-        public ResponseEntity<Set<CategoryDto>> get() {
-                Set<CategoryDto> categoryDtos = categoryService.findAll();
+        public ResponseEntity<List<CategoryDto>> get() {
+                List<CategoryDto> categoryDtos = categoryService.findAll();
                 return new ResponseEntity<>(categoryDtos, HttpStatus.OK);
         }
 
@@ -50,7 +50,7 @@ public class CategoryController {
                         @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }) })
         @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
         public ResponseEntity<CategoryDto> create(@RequestBody CategoryDto newCategory) {
-                CategoryDto category = categoryService.save(newCategory);
-                return new ResponseEntity<>(category, HttpStatus.CREATED);
+                categoryService.save(newCategory);
+                return new ResponseEntity<>(newCategory, HttpStatus.CREATED);
         }
 }

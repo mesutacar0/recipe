@@ -2,7 +2,7 @@ package com.mendix.recipe.service.interfaces;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Set;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class CategoryServiceTest {
         categoryService.save(cat2);
         categoryService.save(cat3);
 
-        Set<CategoryDto> catList = categoryService.findAll();
+        List<CategoryDto> catList = categoryService.findAll();
 
         assertEquals(catList.stream().count(), 3);
 
@@ -40,8 +40,8 @@ public class CategoryServiceTest {
         CategoryDto category1 = new CategoryDto(cat1);
 
         // When
-        CategoryDto categoryResult = categoryService.save(category1);
-
+        categoryService.save(category1);
+        CategoryDto categoryResult = categoryService.findAll().get(0);
         // Then
         assertEquals(cat1, categoryResult.getName());
     }

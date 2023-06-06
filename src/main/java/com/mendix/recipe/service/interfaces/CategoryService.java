@@ -1,12 +1,12 @@
 package com.mendix.recipe.service.interfaces;
 
-import java.util.Set;
+import java.util.List;
 
 import com.mendix.recipe.dto.CategoryDto;
 
 public interface CategoryService {
 
-    Set<CategoryDto> findAll();
+    List<CategoryDto> findAll();
 
-    CategoryDto save(CategoryDto category);
+    void save(CategoryDto category);
 }
