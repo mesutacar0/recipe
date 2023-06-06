@@ -3,6 +3,9 @@ package com.mendix.recipe.model;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
+
+import java.util.Objects;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 
 @XmlRootElement(name = "cat")
@@ -26,10 +29,7 @@ public class Category {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
+        return Objects.hashCode(name);
     }
 
     @Override
