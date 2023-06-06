@@ -7,7 +7,7 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "recipeml", namespace = "")
-public class RecipeXML {
+public class RecipeML {
 
     @XmlAttribute
     private String version;
