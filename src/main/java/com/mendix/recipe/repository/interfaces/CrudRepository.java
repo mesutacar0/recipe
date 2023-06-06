@@ -9,4 +9,6 @@ public interface CrudRepository<T, ID> {
     Iterable<T> findAll();
 
     Boolean existsById(ID id);
+
+    ID getId(T entity);
 }

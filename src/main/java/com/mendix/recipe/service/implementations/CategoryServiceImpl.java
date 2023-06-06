@@ -15,10 +15,10 @@ import com.mendix.recipe.service.interfaces.CategoryService;
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
-    CategoryMapper categoryMapper;
+    private CategoryMapper categoryMapper;
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @Override
     public List<CategoryDto> findAll() {
