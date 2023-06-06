@@ -1,10 +1,9 @@
 package com.mendix.recipe.repository.interfaces;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 public interface RecipeKeywordRepository {
     void save(String keyword, String recipe);
 
-    List<String> findByKeyword(String keyword);
+    Set<String> findByKeyword(String keyword);
 }

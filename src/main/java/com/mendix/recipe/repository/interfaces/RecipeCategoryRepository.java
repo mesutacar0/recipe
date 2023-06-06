@@ -1,11 +1,10 @@
 package com.mendix.recipe.repository.interfaces;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 public interface RecipeCategoryRepository {
 
     void save(String category, String recipe);
 
-    Optional<List<String>> findByCategory(String category);
+    Set<String> findByCategory(String category);
 }

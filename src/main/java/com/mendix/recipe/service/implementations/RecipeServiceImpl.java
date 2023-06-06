@@ -1,7 +1,8 @@
 package com.mendix.recipe.service.implementations;
 
 import java.util.List;
-import java.util.StringTokenizer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,9 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
-import com.mendix.recipe.dto.CategoryDto;
+import com.mendix.recipe.config.ApplicationConfig;
 import com.mendix.recipe.dto.RecipeDto;
+import com.mendix.recipe.exception.NoDataFoundException;
 import com.mendix.recipe.mapper.RecipeMapper;
 import com.mendix.recipe.repository.interfaces.RecipeCategoryRepository;
 import com.mendix.recipe.repository.interfaces.RecipeKeywordRepository;
@@ -39,6 +41,9 @@ public class RecipeServiceImpl implements RecipeService {
     @Autowired
     CategoryService categoryService;
 
+    @Autowired
+    private ApplicationConfig applicationConfig;
+
     @Override
     public List<RecipeDto> findAll() {
         return StreamSupport.stream(recipeRepository.findAll().spliterator(), false)
@@ -46,14 +51,15 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<RecipeDto> findByCategory(CategoryDto category) {
-        return recipeRepository.findByCategory(category.getName()).stream().map(recipeMapper::recipeToRecipeDto)
-                .toList();
+    public List<RecipeDto> findByCategory(String category) {
+        return recipeCategoryRepository.findByCategory(category).stream().map(id -> recipeRepository.findById(id))
+                .filter(x -> x != null)
+                .map(r -> recipeMapper.recipeToRecipeDto(r)).collect(Collectors.toList());
     }
 
     @Override
     public RecipeDto save(RecipeDto recipe) {
-        if (isExists(recipe))
+        if (isExists(recipe.getHead().getTitle().toString().toLowerCase()))
             throw new EntityExistsException();
 
         generateCategories(recipe);
@@ -64,27 +70,25 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<RecipeDto> searchByKeyword(String keyword) {
-
-        return List.of(recipeMapper
-                .recipeToRecipeDto(recipeRepository.findById(recipeKeywordRepository.findByKeyword(keyword).get(0))));
+        return recipeKeywordRepository.findByKeyword(keyword).stream().map(id -> recipeRepository.findById(id))
+                .filter(x -> x != null)
+                .map(r -> recipeMapper.recipeToRecipeDto(r)).collect(Collectors.toList());
     }
 
     @Override
     @EventListener(ApplicationReadyEvent.class)
     public void init() {
-        XMLOperations.loadInitialFiles()
+        XMLOperations.loadInitialFiles(applicationConfig.getXmlFilePath())
                 .forEach(recipeXml -> save(recipeMapper.recipeToRecipeDto(recipeXml.getRecipe())));
     }
 
-    private Boolean isExists(RecipeDto recipe) {
-        return recipeRepository.existsById(recipe.getHead().getTitle().toLowerCase());
+    private Boolean isExists(String recipeId) {
+        return recipeRepository.existsById(recipeId);
     }
 
     private void generateKeywords(RecipeDto recipe) {
-        StringTokenizer stringTokenizer = new StringTokenizer(recipe.getKeywords());
-        while (stringTokenizer.hasMoreElements()) {
-            recipeKeywordRepository.save(stringTokenizer.nextToken(), recipe.getHead().getTitle().toLowerCase());
-        }
+        Stream.of(recipe.getKeywords().split(" "))
+                .forEach(s -> recipeKeywordRepository.save(s, recipe.getHead().getTitle().toLowerCase()));
     }
 
     private void generateCategories(RecipeDto recipe) {
@@ -93,5 +97,14 @@ public class RecipeServiceImpl implements RecipeService {
         recipe.getHead().getCategories().forEach(c -> {
             recipeCategoryRepository.save(c.getName().toLowerCase(), recipe.getHead().getTitle().toLowerCase());
         });
+    }
+
+    @Override
+    public RecipeDto findByTitle(String title) {
+        String recipeId = title.toLowerCase();
+        if (!isExists(recipeId))
+            throw new NoDataFoundException("Recipe Not Found: " + title);
+
+        return recipeMapper.recipeToRecipeDto(recipeRepository.findById(recipeId));
     }
 }
