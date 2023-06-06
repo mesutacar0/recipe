@@ -1,6 +1,7 @@
 package com.mendix.recipe.repository.implementations;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -14,12 +15,15 @@ import com.mendix.recipe.repository.interfaces.RecipeCategoryRepository;
 @Repository
 public class RecipeCategoryRepositoryImpl implements RecipeCategoryRepository {
 
-    private Map<String, Set<String>> categoryRecipeMap = new HashMap<>();
+    private Map<String, Set<String>> categoryRecipeMap = new HashMap<String, Set<String>>();
 
     @Override
     public void save(String category, String recipe) {
         if (existsById(category)) {
-            categoryRecipeMap.get(category).add(recipe);
+            Set<String> recipeSet = new HashSet<>();
+            recipeSet.addAll(categoryRecipeMap.get(category));
+            recipeSet.add(recipe);
+            categoryRecipeMap.put(category, recipeSet);
         } else {
             categoryRecipeMap.put(category, Set.of(recipe));
         }

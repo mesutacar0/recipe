@@ -17,12 +17,11 @@ public class CategoryServiceTest {
     CategoryService categoryService;
 
     @Test
-    void testFindAll() {
+    void should_ReturnTrue_when_CountsEqual() {
 
         CategoryDto cat1 = new CategoryDto("cat1");
         CategoryDto cat2 = new CategoryDto("cat2");
         CategoryDto cat3 = new CategoryDto("cat3");
-
         categoryService.save(cat1);
         categoryService.save(cat2);
         categoryService.save(cat3);
@@ -30,7 +29,6 @@ public class CategoryServiceTest {
         List<CategoryDto> catList = categoryService.findAll();
 
         assertEquals(catList.stream().count(), 3);
-
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.mendix.recipe.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -8,7 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class IngredientDivisionDto {
     @Schema(description = "Ingredient division title", example = "GLAZE")
     private String title;
-    private List<IngredientDto> ingredients;
+    private List<IngredientDto> ingredients = new ArrayList<>();
 
     public String getTitle() {
         return title;

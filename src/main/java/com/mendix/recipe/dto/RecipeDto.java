@@ -60,4 +60,19 @@ public class RecipeDto {
     public void setIngredients(IngredientWrapperDto ingredients) {
         this.ingredients = ingredients;
     }
+
+    public String getKeywords() {
+        StringBuffer keywords = new StringBuffer();
+        keywords.append(head.getTitle());
+        head.getCategories().forEach(c -> keywords.append(c.getName()));
+
+        if (ingredients.getIngredients() != null && !ingredients.getIngredients().isEmpty())
+            ingredients.getIngredients().forEach(i -> keywords.append(i.getItem()));
+
+        if (ingredients.getIngredientDivs() != null && !ingredients.getIngredientDivs().isEmpty())
+            ingredients.getIngredientDivs()
+                    .forEach(div -> div.getIngredients().forEach(i -> keywords.append(i.getItem())));
+
+        return keywords.toString().toLowerCase();
+    }
 }
