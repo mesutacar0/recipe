@@ -1,5 +1,6 @@
 package com.mendix.recipe.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,7 +17,7 @@ public class RecipeHeadDto {
     @NotEmpty
     @JsonProperty(required = true)
     private String title;
-    private List<CategoryDto> categories;
+    private List<CategoryDto> categories = new ArrayList<>();
     @Schema(description = "Recipe Yield", example = "1")
     private int yield;
 

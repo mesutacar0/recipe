@@ -1,6 +1,7 @@
 package com.mendix.recipe.service.implementations;
 
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,17 +55,10 @@ public class RecipeServiceImpl implements RecipeService {
     public RecipeDto save(RecipeDto recipe) {
         if (isExists(recipe))
             throw new EntityExistsException();
-        recipe.getHead().getCategories().forEach(categoryService::save);
-        recipeKeywordRepository.save(recipe.getHead().getTitle().toLowerCase(),
-                recipe.getHead().getTitle().toLowerCase());
-        recipe.getHead().getCategories().forEach(c -> {
-            recipeCategoryRepository.save(c.getName().toLowerCase(), recipe.getHead().getTitle().toLowerCase());
-            recipeKeywordRepository.save(c.getName().toLowerCase(), recipe.getHead().getTitle().toLowerCase());
-        });
-        // recipe.getIngredients().getIngredients().stream().forEach(c -> {
-        // recipeKeywordRepository.save(c.getItem().toLowerCase(),
-        // recipe.getHead().getTitle().toLowerCase());
-        // });
+
+        generateCategories(recipe);
+        generateKeywords(recipe);
+
         return recipeMapper.recipeToRecipeDto(recipeRepository.save(recipeMapper.recipeDtoToRecipe(recipe)));
     }
 
@@ -73,10 +67,6 @@ public class RecipeServiceImpl implements RecipeService {
 
         return List.of(recipeMapper
                 .recipeToRecipeDto(recipeRepository.findById(recipeKeywordRepository.findByKeyword(keyword).get(0))));
-        // return StreamSupport.stream(recipeRepository.findAll().spliterator(), false)
-        // .filter(r -> r.toString().contains(keyword))
-        // .map(recipeMapper::recipeToRecipeDto)
-        // .toList();
     }
 
     @Override
@@ -88,5 +78,20 @@ public class RecipeServiceImpl implements RecipeService {
 
     private Boolean isExists(RecipeDto recipe) {
         return recipeRepository.existsById(recipe.getHead().getTitle().toLowerCase());
+    }
+
+    private void generateKeywords(RecipeDto recipe) {
+        StringTokenizer stringTokenizer = new StringTokenizer(recipe.getKeywords());
+        while (stringTokenizer.hasMoreElements()) {
+            recipeKeywordRepository.save(stringTokenizer.nextToken(), recipe.getHead().getTitle().toLowerCase());
+        }
+    }
+
+    private void generateCategories(RecipeDto recipe) {
+        recipe.getHead().getCategories().forEach(categoryService::save);
+
+        recipe.getHead().getCategories().forEach(c -> {
+            recipeCategoryRepository.save(c.getName().toLowerCase(), recipe.getHead().getTitle().toLowerCase());
+        });
     }
 }
