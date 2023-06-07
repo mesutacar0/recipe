@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,12 +17,15 @@ public class RecipeDto {
     private IngredientWrapperDto ingredients;
     @NotNull
     private DirectionDto directions;
+    @JsonIgnore
+    private String id;
 
     public RecipeHeadDto getHead() {
         return head;
     }
 
     public void setHead(RecipeHeadDto head) {
+        this.id = head.getTitle().toLowerCase();
         this.head = head;
     }
 
@@ -65,6 +70,7 @@ public class RecipeDto {
         this.ingredients = ingredients;
     }
 
+    @JsonIgnore
     public String getKeywords() {
         StringBuilder keywords = new StringBuilder();
         keywords.append(head.getTitle()).append(" ");
@@ -75,5 +81,9 @@ public class RecipeDto {
                 .flatMap(Collection::stream).map(IngredientDto::getItem).collect(Collectors.joining(" ")));
 
         return keywords.toString().toLowerCase();
+    }
+
+    public String getId() {
+        return id;
     }
 }

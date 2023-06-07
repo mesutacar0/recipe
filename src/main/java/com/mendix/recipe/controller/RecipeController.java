@@ -87,9 +87,8 @@ public class RecipeController {
                                         @Content(schema = @Schema(implementation = RecipeDto.class)) }),
                         @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }),
                         @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }) })
-        @PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE,
-                        MediaType.APPLICATION_XML_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
-        public ResponseEntity<RecipeDto> create(@RequestBody @Validated RecipeDto newRecipe) {
+        @PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
+        public ResponseEntity<RecipeDto> create(@Validated @RequestBody RecipeDto newRecipe) {
                 RecipeDto recipe = recipeService.save(newRecipe);
                 return new ResponseEntity<>(recipe, HttpStatus.CREATED);
         }

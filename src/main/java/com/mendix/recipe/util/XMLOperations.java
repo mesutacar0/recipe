@@ -34,7 +34,7 @@ public final class XMLOperations {
             logger.info("Loading file failed: {}", file.getPath());
         }
 
-        logger.info("XML File Unmarshalled: " + file.toString());
+        logger.info("XML File Unmarshalled: {}", file.toString());
         return recipeML;
     }
 
@@ -45,10 +45,10 @@ public final class XMLOperations {
             if (content.contains("xml")) {
                 isXml = true;
             } else {
-                logger.info("Invalid File Type Failed: " + content);
+                logger.info("Invalid File Type Failed: {}", content);
             }
         } catch (IOException e) {
-            logger.info("File Content Type Failed: " + e.getMessage());
+            logger.info("File Content Type Failed: {}", e.getMessage());
         }
         return isXml;
     }
