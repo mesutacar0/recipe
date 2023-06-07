@@ -62,7 +62,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                                 "Internal Server Error, Please Contact Developer",
                                 LocalDateTime.now());
 
-                logger.info("Exception: ", ex.getMessage());
+                logger.info("Exception: {}", ex.getMessage());
                 return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

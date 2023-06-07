@@ -27,7 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void save(CategoryDto categoryDto) {
+    public synchronized void save(CategoryDto categoryDto) {
         if (!isExists(categoryDto))
             categoryMapper.stringToCategory(categoryRepository.save(categoryDto.getName()));
     }
