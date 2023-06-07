@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import com.mendix.recipe.config.ApplicationConfig;
 import com.mendix.recipe.dto.RecipeDto;
@@ -27,19 +28,19 @@ import jakarta.persistence.EntityExistsException;
 public class RecipeServiceImpl implements RecipeService {
 
     @Autowired
-    RecipeMapper recipeMapper;
+    private RecipeMapper recipeMapper;
 
     @Autowired
-    RecipeRepository recipeRepository;
+    private RecipeRepository recipeRepository;
 
     @Autowired
-    RecipeCategoryRepository recipeCategoryRepository;
+    private RecipeCategoryRepository recipeCategoryRepository;
 
     @Autowired
-    RecipeKeywordRepository recipeKeywordRepository;
+    private RecipeKeywordRepository recipeKeywordRepository;
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @Autowired
     private ApplicationConfig applicationConfig;
@@ -59,7 +60,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public RecipeDto save(RecipeDto recipe) {
+    public synchronized RecipeDto save(@Validated RecipeDto recipe) {
         if (isExists(recipe.getId()))
             throw new EntityExistsException();
 
@@ -89,15 +90,15 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     private void generateKeywords(RecipeDto recipe) {
-        Stream.of(recipe.getKeywords().split(" "))
-                .forEach(s -> recipeKeywordRepository.save(s, recipe.getHead().getTitle().toLowerCase()));
+        Stream.of(recipe.getKeywords().replaceAll("[^A-Za-z ]", "").split(" "))
+                .forEach(s -> recipeKeywordRepository.save(s, recipe.getId()));
     }
 
     private void generateCategories(RecipeDto recipe) {
         recipe.getHead().getCategories().forEach(categoryService::save);
 
         recipe.getHead().getCategories().forEach(c -> {
-            recipeCategoryRepository.save(c.getName().toLowerCase(), recipe.getHead().getTitle().toLowerCase());
+            recipeCategoryRepository.save(c.getName().toLowerCase(), recipe.getId());
         });
     }
 

@@ -59,7 +59,7 @@ public class RecipeDto {
 
         RecipeDto other = (RecipeDto) obj;
 
-        return Objects.equals(head.getTitle(), other.getHead().getTitle());
+        return Objects.equals(head.getTitle().toLowerCase(), other.getHead().getTitle().toLowerCase());
     }
 
     public IngredientWrapperDto getIngredients() {

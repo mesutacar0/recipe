@@ -34,7 +34,7 @@ public final class XMLOperations {
             logger.info("Loading file failed: {}", file.getPath());
         }
 
-        logger.info("XML File Unmarshalled: {}", file.toString());
+        logger.info("XML File Unmarshalled: {}", file);
         return recipeML;
     }
 

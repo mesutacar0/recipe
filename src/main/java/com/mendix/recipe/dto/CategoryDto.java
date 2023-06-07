@@ -55,7 +55,7 @@ public class CategoryDto {
             if (other.name != null) {
                 return false;
             }
-        } else if (!name.equals(other.name)) {
+        } else if (!name.toLowerCase().equals(other.name.toLowerCase())) {
             return false;
         }
         return true;

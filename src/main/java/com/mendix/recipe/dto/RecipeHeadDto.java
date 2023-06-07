@@ -49,4 +49,8 @@ public class RecipeHeadDto {
         this.categories = categories;
         this.yield = yield;
     }
+
+    public RecipeHeadDto() {
+    }
+
 }
