@@ -52,14 +52,15 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<RecipeDto> findByCategory(String category) {
-        return recipeCategoryRepository.findByCategory(category).stream().map(id -> recipeRepository.findById(id))
+        return recipeCategoryRepository.findByCategory(category.toLowerCase()).stream()
+                .map(id -> recipeRepository.findById(id))
                 .filter(x -> x != null)
                 .map(r -> recipeMapper.recipeToRecipeDto(r)).collect(Collectors.toList());
     }
 
     @Override
     public RecipeDto save(RecipeDto recipe) {
-        if (isExists(recipe.getHead().getTitle().toString().toLowerCase()))
+        if (isExists(recipe.getId()))
             throw new EntityExistsException();
 
         generateCategories(recipe);
@@ -70,7 +71,8 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<RecipeDto> searchByKeyword(String keyword) {
-        return recipeKeywordRepository.findByKeyword(keyword).stream().map(id -> recipeRepository.findById(id))
+        return recipeKeywordRepository.findByKeyword(keyword.toLowerCase()).stream()
+                .map(id -> recipeRepository.findById(id))
                 .filter(x -> x != null)
                 .map(r -> recipeMapper.recipeToRecipeDto(r)).collect(Collectors.toList());
     }
@@ -103,7 +105,7 @@ public class RecipeServiceImpl implements RecipeService {
     public RecipeDto findByTitle(String title) {
         String recipeId = title.toLowerCase();
         if (!isExists(recipeId))
-            throw new NoDataFoundException("Recipe Not Found: " + title);
+            throw new NoDataFoundException("Recipe Not Found wiht Title: " + title);
 
         return recipeMapper.recipeToRecipeDto(recipeRepository.findById(recipeId));
     }
