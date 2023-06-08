@@ -2,6 +2,7 @@ package com.mendix.recipe.service.interfaces;
 
 import java.util.List;
 
+import com.mendix.recipe.dto.CategoryRootDto;
 import com.mendix.recipe.dto.RecipeDto;
 
 public interface RecipeService {
@@ -19,4 +20,6 @@ public interface RecipeService {
     void deleteAll();
 
     void init();
+
+    List<CategoryRootDto> findAllRoot();
 }

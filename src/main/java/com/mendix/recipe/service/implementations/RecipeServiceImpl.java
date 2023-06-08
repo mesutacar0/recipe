@@ -1,5 +1,6 @@
 package com.mendix.recipe.service.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import com.mendix.recipe.config.ApplicationConfig;
+import com.mendix.recipe.dto.CategoryRootDto;
 import com.mendix.recipe.dto.RecipeDto;
 import com.mendix.recipe.exception.NoDataFoundException;
 import com.mendix.recipe.mapper.RecipeMapper;
@@ -114,5 +116,13 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public void deleteAll() {
         recipeRepository.deleteAll();
+    }
+
+    @Override
+    public List<CategoryRootDto> findAllRoot() {
+        List<CategoryRootDto> categoryRoots = new ArrayList<>();
+        categoryService.findAll()
+                .forEach(c -> categoryRoots.add(new CategoryRootDto(c.getName(), findByCategory(c.getName()))));
+        return categoryRoots;
     }
 }

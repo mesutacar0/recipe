@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mendix.recipe.dto.CategoryRootDto;
 import com.mendix.recipe.dto.RecipeDto;
 import com.mendix.recipe.service.interfaces.RecipeService;
 
@@ -91,5 +92,16 @@ public class RecipeController {
         public ResponseEntity<RecipeDto> create(@Validated @RequestBody RecipeDto newRecipe) {
                 RecipeDto recipe = recipeService.save(newRecipe);
                 return new ResponseEntity<>(recipe, HttpStatus.CREATED);
+        }
+
+        @Operation(summary = "List of Category Recipes Map", description = "Get List of All Available Recipes")
+        @ApiResponses({
+                        @ApiResponse(responseCode = "200", content = {
+                                        @Content(schema = @Schema(implementation = RecipeDto.class)) }),
+                        @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+                        @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
+        @GetMapping("/root")
+        public ResponseEntity<List<CategoryRootDto>> getRoot() {
+                return new ResponseEntity<>(recipeService.findAllRoot(), HttpStatus.OK);
         }
 }
