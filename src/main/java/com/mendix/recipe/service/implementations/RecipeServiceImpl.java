@@ -110,4 +110,9 @@ public class RecipeServiceImpl implements RecipeService {
 
         return recipeMapper.recipeToRecipeDto(recipeRepository.findById(recipeId));
     }
+
+    @Override
+    public void deleteAll() {
+        recipeRepository.deleteAll();
+    }
 }

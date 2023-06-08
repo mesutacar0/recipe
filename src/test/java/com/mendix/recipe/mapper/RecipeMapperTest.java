@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.mendix.recipe.dto.CategoryDto;
 import com.mendix.recipe.dto.RecipeDto;
 import com.mendix.recipe.dto.RecipeHeadDto;
-import com.mendix.recipe.model.Category;
 import com.mendix.recipe.model.Recipe;
 import com.mendix.recipe.model.RecipeHead;
 

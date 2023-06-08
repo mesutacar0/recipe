@@ -9,4 +9,6 @@ public interface CategoryService {
     List<CategoryDto> findAll();
 
     void save(CategoryDto category);
+
+    void deleteAll();
 }

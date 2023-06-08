@@ -1,12 +1,12 @@
 package com.mendix.recipe.service.interfaces;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,8 +19,13 @@ public class CategoryServiceTest {
     @Autowired
     CategoryService categoryService;
 
+    @BeforeEach
+    void emptyRepository() {
+        categoryService.deleteAll();
+    }
+
     @Test
-    void should_return_allSavedCategories() {
+    void givenCategories_whenSaved_thenReturnTrue() {
         CategoryDto cat1 = new CategoryDto("cat1");
         CategoryDto cat2 = new CategoryDto("cat2");
         CategoryDto cat3 = new CategoryDto("cat3");
@@ -35,7 +40,7 @@ public class CategoryServiceTest {
     }
 
     @Test
-    void should_returnTrue_whenSameCategoryNotInserted() {
+    void givenCategoryWithSameName_whenNotSaved_thenReturnTrue() {
         CategoryDto cat1 = new CategoryDto("cat1");
         CategoryDto cat2 = new CategoryDto("cat1");
         categoryService.save(cat1);
@@ -48,9 +53,9 @@ public class CategoryServiceTest {
     }
 
     @Test
-    void should_ReturnTrue_whenContainsSavedCategory() {
-        String cat = UUID.randomUUID().toString();
-        CategoryDto category = new CategoryDto(cat);
+    void givenCategoryWithUniqueId_whenSaved_thenShouldFound() {
+        String uniqueCategory = UUID.randomUUID().toString();
+        CategoryDto category = new CategoryDto(uniqueCategory);
 
         categoryService.save(category);
 

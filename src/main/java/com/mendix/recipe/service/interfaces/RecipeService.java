@@ -16,5 +16,7 @@ public interface RecipeService {
 
     RecipeDto save(RecipeDto recipe);
 
+    void deleteAll();
+
     void init();
 }

@@ -11,4 +11,6 @@ public interface CrudRepository<T, ID> {
     Boolean existsById(ID id);
 
     ID getId(T entity);
+
+    void deleteAll();
 }

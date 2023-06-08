@@ -38,4 +38,9 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     public String getId(String entity) {
         return entity.toLowerCase();
     }
+
+    @Override
+    public void deleteAll() {
+        categories.clear();
+    }
 }
