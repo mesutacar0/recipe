@@ -1,6 +1,6 @@
 # Spring Boot Recipe API
 
-BeckEnd Rest Service for Recipes
+BackEnd Rest Service for Recipes
 
 
 ## Requirements
@@ -28,3 +28,11 @@ Application will initially look for xml files on path specified at application.p
 After building and running the application locally at 8080 port; available endpoints and model with documentations will be accessed and can be tested on;
 
 [Swagger UI](http://localhost:8080/swagger-ui/index.html#/)
+
+## Unit Test
+
+Unit tests can be run as;
+
+```shell
+mvn test
+```
