@@ -36,4 +36,9 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.existsById(categoryDto.getName().toLowerCase());
     }
 
+    @Override
+    public void deleteAll() {
+        categoryRepository.deleteAll();
+    }
+
 }

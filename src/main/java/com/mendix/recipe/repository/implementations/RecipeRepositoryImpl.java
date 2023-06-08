@@ -39,4 +39,9 @@ public class RecipeRepositoryImpl implements RecipeRepository {
     public String getId(Recipe recipe) {
         return recipe.getHead().getTitle().toLowerCase();
     }
+
+    @Override
+    public void deleteAll() {
+        recipes.clear();
+    }
 }
