@@ -2,6 +2,7 @@ package com.mendix.recipe.service.implementations;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -87,7 +88,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     private void generateKeywords(Recipe recipe) {
-        Stream.of(recipe.getKeywords().replaceAll("[^A-Za-z ]", "").split(" "))
+        Stream.of(recipe.getKeywords().replaceAll("[^A-Za-z ]", "").split(" ")).filter(Predicate.not(String::isBlank))
                 .forEach(keyword -> recipeKeywordRepository.save(keyword, recipe.getId()));
     }
 
