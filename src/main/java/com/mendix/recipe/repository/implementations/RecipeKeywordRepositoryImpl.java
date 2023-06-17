@@ -29,4 +29,9 @@ public class RecipeKeywordRepositoryImpl implements RecipeKeywordRepository {
         return keywordRecipeMap.get(keyword);
     }
 
+    @Override
+    public void deleteAll() {
+        keywordRecipeMap.clear();
+    }
+
 }

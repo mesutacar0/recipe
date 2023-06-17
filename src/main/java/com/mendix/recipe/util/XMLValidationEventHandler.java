@@ -12,9 +12,7 @@ public class XMLValidationEventHandler implements ValidationEventHandler {
 
     @Override
     public boolean handleEvent(ValidationEvent event) {
-        logger.info("XML Validation Event Info: " + event);
-        if (event.getMessage().toLowerCase().contains("unexpected element"))
-            return true;
-        return false;
+        logger.info("XML Validation Event Info: {}", event);
+        return event.getMessage().toLowerCase().contains("unexpected element");
     }
 }

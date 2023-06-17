@@ -1,73 +1,79 @@
 package com.mendix.recipe.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.mendix.recipe.dto.CategoryDto;
 import com.mendix.recipe.dto.RecipeDto;
 import com.mendix.recipe.dto.RecipeHeadDto;
+import com.mendix.recipe.model.Category;
 import com.mendix.recipe.model.Recipe;
 import com.mendix.recipe.model.RecipeHead;
+import com.mendix.recipe.service.implementations.ApplicationStartupService;
 
 @SpringBootTest
 public class RecipeMapperTest {
 
+    @MockBean
+    ApplicationStartupService applicationStartupService;
+
     @Autowired
     RecipeMapper recipeMapper;
 
-    @Test
-    void givenStringList_thenMappedCategoryList_shouldBeEqual() {
-        CategoryDto categoryDto = new CategoryDto("Category");
-        String cat = new String("Category");
+    Recipe recipe = new Recipe();
+    Recipe mappedRecipe = new Recipe();
+    RecipeHead recipeHead = new RecipeHead();
+    Category category = new Category();
 
-        List<String> mappedCat = RecipeMapper.categoryToString(List.of(categoryDto));
+    RecipeDto recipeDto = new RecipeDto();
+    RecipeHeadDto recipeHeadDto = new RecipeHeadDto();
+    CategoryDto categoryDto = new CategoryDto();
 
-        mappedCat.forEach(c -> assertEquals(c, cat));
+    @BeforeEach
+    void setup() {
+        recipeHead.setTitle("Recipe1");
+        category.setName("cateogry");
+        recipeHead.setCategories(List.of(category));
+        recipe.setHead(recipeHead);
+
+        categoryDto.setName("category");
+        recipeHeadDto.setCategories(List.of(categoryDto));
+        recipeDto.setHead(recipeHeadDto);
     }
 
     @Test
-    void givenRecipe_shouldReturnEqualDto() {
-        Recipe recipe = new Recipe();
-        RecipeHead recipeHead = new RecipeHead();
-        recipeHead.setTitle("Recipe1");
-        recipeHead.setCategories(List.of("category"));
-        recipe.setHead(recipeHead);
-
-        RecipeDto recipeDto = new RecipeDto();
-        RecipeHeadDto recipeHeadDto = new RecipeHeadDto();
+    void givenRecipeDto_shouldReturnEqual_whenMapped() {
         recipeHeadDto.setTitle("Recipe1");
-        CategoryDto categoryDto = new CategoryDto("category");
-        recipeHeadDto.setCategories(List.of(categoryDto));
-        recipeDto.setHead(recipeHeadDto);
 
-        RecipeDto mappedRecipeDto = recipeMapper.recipeToRecipeDto(recipe);
+        mappedRecipe = recipeMapper.recipeDtoToRecipe(recipeDto);
 
-        assertEquals(mappedRecipeDto, recipeDto);
+        assertEquals(mappedRecipe, recipe, "Mapped Recipe DTO should be equal to Recipe");
     }
 
     @Test
-    void givenRecipe_whenCaseSensitive_shouldReturnEqualDto() {
-        Recipe recipe = new Recipe();
-        RecipeHead recipeHead = new RecipeHead();
-        recipeHead.setTitle("Recipe1");
-        recipeHead.setCategories(List.of("category"));
-        recipe.setHead(recipeHead);
+    void givenRecipeDto_shouldReturnNOTEqual_whenMappedAnother() {
+        recipeHeadDto.setTitle("Recipe2");
 
-        RecipeDto recipeDto = new RecipeDto();
-        RecipeHeadDto recipeHeadDto = new RecipeHeadDto();
-        recipeHeadDto.setTitle("Recipe1");
-        CategoryDto categoryDto = new CategoryDto("category");
-        recipeHeadDto.setCategories(List.of(categoryDto));
-        recipeDto.setHead(recipeHeadDto);
+        mappedRecipe = recipeMapper.recipeDtoToRecipe(recipeDto);
 
-        RecipeDto mappedRecipeDto = recipeMapper.recipeToRecipeDto(recipe);
+        assertNotEquals(mappedRecipe, recipe, "Different Recipe DTO should not be equal to Recipe");
+    }
 
-        assertEquals(mappedRecipeDto, recipeDto);
+    @Test
+    void givenRecipe_whenCaseSensitive_shouldReturnEqual() {
+        recipeHeadDto.setTitle("recipe1");
+
+        Recipe mappedRecipe = recipeMapper.recipeDtoToRecipe(recipeDto);
+
+        assertEquals(mappedRecipe, recipe, "Mapped Case Sensitive Recipe DTO should be equal to Recipe");
     }
 
 }

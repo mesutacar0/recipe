@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.mendix.recipe.dto.CategoryDto;
 import com.mendix.recipe.mapper.CategoryMapper;
+import com.mendix.recipe.model.Category;
 import com.mendix.recipe.repository.interfaces.CategoryRepository;
 import com.mendix.recipe.service.interfaces.CategoryService;
 
@@ -23,17 +24,17 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryDto> findAll() {
         return StreamSupport.stream(categoryRepository.findAll().spliterator(), false)
-                .map(categoryMapper::stringToCategory).toList();
+                .map(categoryMapper::categoryToCategoryDto).toList();
     }
 
     @Override
-    public synchronized void save(CategoryDto categoryDto) {
-        if (!isExists(categoryDto))
-            categoryMapper.stringToCategory(categoryRepository.save(categoryDto.getName()));
+    public synchronized void save(Category category) {
+        if (!isExists(category))
+            categoryRepository.save(category);
     }
 
-    private Boolean isExists(CategoryDto categoryDto) {
-        return categoryRepository.existsById(categoryDto.getName().toLowerCase());
+    private boolean isExists(Category category) {
+        return categoryRepository.existsById(category.getId());
     }
 
     @Override

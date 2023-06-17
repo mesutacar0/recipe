@@ -6,21 +6,22 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.mendix.recipe.model.Category;
 import com.mendix.recipe.repository.interfaces.CategoryRepository;
 
 @Repository
 public class CategoryRepositoryImpl implements CategoryRepository {
 
-    private final Map<String, String> categories = new HashMap<>();
+    private final Map<String, Category> categories = new HashMap<>();
 
     @Override
-    public String save(String category) {
-        categories.put(getId(category), category);
+    public Category save(Category category) {
+        categories.put(category.getId(), category);
         return category;
     }
 
     @Override
-    public Collection<String> findAll() {
+    public Collection<Category> findAll() {
         return categories.values();
     }
 
@@ -30,13 +31,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public String findById(String id) {
+    public Category findById(String id) {
         return categories.get(id);
-    }
-
-    @Override
-    public String getId(String entity) {
-        return entity.toLowerCase();
     }
 
     @Override

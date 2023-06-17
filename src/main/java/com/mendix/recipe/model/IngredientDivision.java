@@ -20,14 +20,6 @@ public class IngredientDivision {
         this.title = title;
     }
 
-    public IngredientDivision(String title, List<Ingredient> ingredientList) {
-        this.title = title;
-        this.ingredients = ingredientList;
-    }
-
-    public IngredientDivision() {
-    }
-
     @XmlElement(name = "ing")
     public List<Ingredient> getIngredients() {
         return ingredients;

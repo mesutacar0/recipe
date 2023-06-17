@@ -1,31 +1,31 @@
 package com.mendix.recipe.dto;
 
-import java.util.Collection;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mendix.recipe.dto.validation.IngredientWrapperValidation;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
-@Schema(description = "Recipe Model Information")
+@Schema(name = "Recipe", description = "Recipe Model Information")
 public class RecipeDto {
-    @NotNull
+
+    @NotNull(message = "Recipe Head info cannot be null")
+    @Valid
     private RecipeHeadDto head;
-    @NotNull
+    @IngredientWrapperValidation
+    @Valid
     private IngredientWrapperDto ingredients;
-    @NotNull
+    @NotNull(message = "Recipe Directions cannot be empty")
+    @Valid
     private DirectionDto directions;
-    @JsonIgnore
-    private String id;
 
     public RecipeHeadDto getHead() {
         return head;
     }
 
     public void setHead(RecipeHeadDto head) {
-        this.id = head.getTitle().toLowerCase();
         this.head = head;
     }
 
@@ -37,12 +37,17 @@ public class RecipeDto {
         this.directions = directions;
     }
 
-    public RecipeDto() {
+    public IngredientWrapperDto getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(IngredientWrapperDto ingredients) {
+        this.ingredients = ingredients;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(head.getTitle());
+        return Objects.hash(head.getTitle().toLowerCase());
     }
 
     @Override
@@ -56,34 +61,7 @@ public class RecipeDto {
         if (getClass() != obj.getClass()) {
             return false;
         }
-
         RecipeDto other = (RecipeDto) obj;
-
         return Objects.equals(head.getTitle().toLowerCase(), other.getHead().getTitle().toLowerCase());
-    }
-
-    public IngredientWrapperDto getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(IngredientWrapperDto ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    @JsonIgnore
-    public String getKeywords() {
-        StringBuilder keywords = new StringBuilder();
-        keywords.append(head.getTitle()).append(" ");
-        head.getCategories().forEach(c -> keywords.append(c.getName()).append(" "));
-        keywords.append(
-                ingredients.getIngredients().stream().map(IngredientDto::getItem).collect(Collectors.joining(" ")));
-        keywords.append(ingredients.getIngredientDivs().stream().map(IngredientDivisionDto::getIngredients)
-                .flatMap(Collection::stream).map(IngredientDto::getItem).collect(Collectors.joining(" ")));
-
-        return keywords.toString().toLowerCase();
-    }
-
-    public String getId() {
-        return id;
     }
 }

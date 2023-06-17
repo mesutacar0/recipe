@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 
-@Schema(description = "Recipe Ingredient Division Information")
+@Schema(name = "Ingredient Division", description = "Recipe Ingredient Division Information")
 public class IngredientDivisionDto {
+
     @Schema(description = "Ingredient division title", example = "GLAZE")
     private String title;
+    @NotEmpty(message = "Ingredients cannot be empty")
+    @Valid
     private List<IngredientDto> ingredients = new ArrayList<>();
 
     public String getTitle() {
@@ -27,8 +32,4 @@ public class IngredientDivisionDto {
         this.ingredients = ingredients;
     }
 
-    public IngredientDivisionDto(String title, List<IngredientDto> ingredients) {
-        this.title = title;
-        this.ingredients = ingredients;
-    }
 }

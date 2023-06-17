@@ -19,15 +19,14 @@ public class SwaggerConfig {
     private String url;
 
     @Bean
-    public OpenAPI myOpenAPI() {
-
+    public OpenAPI recipeAppOpenAPI() {
         Contact contact = new Contact();
         contact.setEmail(email);
         contact.setName(name);
         contact.setUrl(url);
 
         Info info = new Info()
-                .title("Mendix Recipe API")
+                .title("Recipe API")
                 .version("1.0.0")
                 .contact(contact)
                 .description("This API exposes endpoints to manage recipes.");
