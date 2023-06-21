@@ -2,23 +2,17 @@ package com.mendix.recipe.model;
 
 import java.util.List;
 
-import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlAccessType;
 
 @XmlRootElement(name = "head")
-@XmlAccessorType(XmlAccessType.FIELD)
 public class RecipeHead {
-    @XmlElement(name = "title")
     private String title;
-    @XmlElementWrapper(name = "categories")
-    @XmlElement(name = "cat")
-    private List<String> categories;
-    @XmlElement(name = "yield")
+    private List<Category> categories;
     private int yield;
 
+    @XmlElement(name = "title")
     public String getTitle() {
         return title;
     }
@@ -27,28 +21,22 @@ public class RecipeHead {
         this.title = title;
     }
 
-    public List<String> getCategories() {
+    @XmlElementWrapper(name = "categories")
+    @XmlElement(name = "cat")
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<String> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 
+    @XmlElement(name = "yield")
     public int getYield() {
         return yield;
     }
 
     public void setYield(int yield) {
         this.yield = yield;
-    }
-
-    public RecipeHead(String title, List<String> categories, int yield) {
-        this.title = title;
-        this.categories = categories;
-        this.yield = yield;
-    }
-
-    public RecipeHead() {
     }
 }

@@ -1,10 +1,13 @@
 package com.mendix.recipe.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
 
-@Schema(description = "Recipe Ingredient Amount  Information")
+@Schema(name = "Ingredient Amount", description = "Recipe Ingredient Amount  Information")
 public class IngredientAmountDto {
+
     @Schema(description = "Amount Quantity", example = "1, 1/2 etc.")
+    @NotEmpty(message = "Amount quantity is mandatory")
     private String quantity;
     @Schema(description = "Amount Unit", example = "cups, package, tablespoon etc.")
     private String unit;
@@ -25,8 +28,4 @@ public class IngredientAmountDto {
         this.unit = unit;
     }
 
-    public IngredientAmountDto(String quantity, String unit) {
-        this.quantity = quantity;
-        this.unit = unit;
-    }
 }

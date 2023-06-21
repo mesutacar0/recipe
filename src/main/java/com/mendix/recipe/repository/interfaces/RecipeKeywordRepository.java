@@ -6,4 +6,6 @@ public interface RecipeKeywordRepository {
     void save(String keyword, String recipe);
 
     Set<String> findByKeyword(String keyword);
+
+    void deleteAll();
 }

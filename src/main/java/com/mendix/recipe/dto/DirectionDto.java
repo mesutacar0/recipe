@@ -1,11 +1,13 @@
 package com.mendix.recipe.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
 
-@Schema(description = "Direction Information for Recipe")
+@Schema(name = "Direction", description = "Direction Information for Recipe")
 public class DirectionDto {
 
     @Schema(description = "Direction steps", example = "Stir, Cook etc.")
+    @NotEmpty(message = "Direction step is mandatory")
     private String step;
 
     public String getStep() {
@@ -16,10 +18,4 @@ public class DirectionDto {
         this.step = step;
     }
 
-    public DirectionDto(String step) {
-        this.step = step;
-    }
-
-    public DirectionDto() {
-    }
 }

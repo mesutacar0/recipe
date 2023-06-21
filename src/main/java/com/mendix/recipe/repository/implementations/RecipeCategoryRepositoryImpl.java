@@ -28,4 +28,9 @@ public class RecipeCategoryRepositoryImpl implements RecipeCategoryRepository {
             return Collections.emptySet();
         return categoryRecipeMap.get(category);
     }
+
+    @Override
+    public void deleteAll() {
+        categoryRecipeMap.clear();
+    }
 }

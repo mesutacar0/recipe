@@ -3,56 +3,59 @@ package com.mendix.recipe.mapper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.mendix.recipe.dto.CategoryDto;
+import com.mendix.recipe.model.Category;
+import com.mendix.recipe.service.implementations.ApplicationStartupService;
 
 @SpringBootTest
 public class CategoryMapperTest {
 
+    @MockBean
+    ApplicationStartupService applicationStartupService;
+
     @Autowired
     CategoryMapper categoryMapper;
 
-    @Test
-    void givenString_whenMapped_thenReturnEqualCategory() {
-        String cat = "Category";
-        CategoryDto givenCategoryDto = new CategoryDto("Category");
+    Category category = new Category();
+    Category mappedCategory = new Category();
+    CategoryDto categoryDto = new CategoryDto();
 
-        CategoryDto mappedCategoryDto = categoryMapper.stringToCategory(cat);
-
-        assertEquals(givenCategoryDto, mappedCategoryDto);
+    @BeforeEach
+    void setup() {
+        category.setName("Category");
     }
 
     @Test
-    void givenString_whenMappedAnother_thenReturnNotEqualCategory() {
-        String cat = "Category Other";
-        CategoryDto givenCategoryDto = new CategoryDto("Category");
+    void givenCategoryDto_shouldReturnEqual_whenMapped() {
+        categoryDto.setName("Category");
 
-        CategoryDto mappedCategoryDto = categoryMapper.stringToCategory(cat);
+        mappedCategory = categoryMapper.categoryDtoToCategory(categoryDto);
 
-        assertNotEquals(givenCategoryDto, mappedCategoryDto);
+        assertEquals(mappedCategory, category, "Mapped Category DTO should be equal to Category");
     }
 
     @Test
-    void givenString_whenMapped_thenReturnSameCategory_ifCase() {
-        String cat = "Category";
-        CategoryDto givenCategoryDto = new CategoryDto("category");
+    void givenCategoryDto_shouldReturnNOTEqual_whenMappedAnother() {
+        categoryDto.setName("CategoryOther");
 
-        CategoryDto mappedCategoryDto = categoryMapper.stringToCategory(cat);
+        mappedCategory = categoryMapper.categoryDtoToCategory(categoryDto);
 
-        assertEquals(givenCategoryDto, mappedCategoryDto);
+        assertNotEquals(mappedCategory, category, "Different Category DTO should not be equal to Category");
     }
 
     @Test
-    void givenEmptyString_whenMapped_thenReturnSameCategory() {
-        String cat = new String();
-        CategoryDto givenCategoryDto = new CategoryDto(cat);
+    void givenCategory_whenCaseSensitive_shouldReturnEqual() {
+        categoryDto.setName("category");
 
-        CategoryDto mappedCategoryDto = categoryMapper.stringToCategory(cat);
+        mappedCategory = categoryMapper.categoryDtoToCategory(categoryDto);
 
-        assertEquals(givenCategoryDto, mappedCategoryDto);
+        assertEquals(mappedCategory, category, "Mapped Case Sensitive Category DTO should be equal to Category");
     }
 
 }

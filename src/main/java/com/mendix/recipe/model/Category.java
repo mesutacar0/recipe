@@ -1,35 +1,39 @@
 package com.mendix.recipe.model;
 
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlTransient;
+import jakarta.xml.bind.annotation.XmlValue;
 
 import java.util.Objects;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-
 @XmlRootElement(name = "cat")
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Category {
 
-    @XmlElement(name = "cat")
     private String name;
+    private String id;
 
+    @XmlValue
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+        this.id = name.toLowerCase();
     }
 
-    public Category(String name) {
-        this.name = name;
+    @XmlTransient
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name);
+        return Objects.hashCode(id);
     }
 
     @Override
@@ -43,20 +47,7 @@ public class Category {
         if (getClass() != obj.getClass()) {
             return false;
         }
-
         Category other = (Category) obj;
-
-        if (name == null) {
-            if (other.name != null) {
-                return false;
-            }
-        } else if (!name.equals(other.name)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(id, other.getId());
     }
-
-    public Category() {
-    }
-
 }

@@ -1,13 +1,16 @@
 package com.mendix.recipe.mapper;
 
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 import com.mendix.recipe.dto.CategoryDto;
+import com.mendix.recipe.model.Category;
 
-@Component
-public class CategoryMapper {
+@Mapper(componentModel = "spring")
+public interface CategoryMapper {
+    CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
 
-    public CategoryDto stringToCategory(String category) {
-        return new CategoryDto(category);
-    }
+    CategoryDto categoryToCategoryDto(Category category);
+
+    Category categoryDtoToCategory(CategoryDto categoryDto);
 }

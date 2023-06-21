@@ -27,11 +27,4 @@ public class Ingredient {
         this.amount = amount;
     }
 
-    public Ingredient(String item, IngredientAmount amount) {
-        this.item = item;
-        this.amount = amount;
-    }
-
-    public Ingredient() {
-    }
 }

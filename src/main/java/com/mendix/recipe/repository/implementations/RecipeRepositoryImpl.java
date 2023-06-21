@@ -16,7 +16,7 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 
     @Override
     public Recipe save(Recipe recipe) {
-        recipes.put(getId(recipe), recipe);
+        recipes.put(recipe.getId(), recipe);
         return recipe;
     }
 
@@ -33,11 +33,6 @@ public class RecipeRepositoryImpl implements RecipeRepository {
     @Override
     public Recipe findById(String id) {
         return recipes.get(id);
-    }
-
-    @Override
-    public String getId(Recipe recipe) {
-        return recipe.getHead().getTitle().toLowerCase();
     }
 
     @Override
